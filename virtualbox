@@ -1,14 +1,16 @@
-sudo apt-get install virtualbox-guest-additions.iso
+sudo apt-get install -y virtualbox-guest-additions.iso
 sudo apt-get install -y dkms build-essential linux-headers-generic linux-headers-$(uname -r)
 
 sudo mkdir /media/vboxGuestAdditions
 sudo mkdir /media/sf_virtualbox 
 --skopiować klientem FTP plik VBoxGuestAdditions.iso do katalogu roboczego (/home/uninetix)
 mount VBoxGuestAdditions.iso /media/vboxGuestAdditions/
+cd /media/vboxGuestAdditions/
+sudo ./VBoxLinuxAdditions.run
 --po restarcie
 sudo adduser uninetix vboxsf
 --"virtualbox" skonfigurowany w shared folders w aplikacji Virtualbox 
 sudo mount -t vboxsf -o uid=999,gid=50 virtualbox /media/sf_virtualbox
 
-cd /media/vboxGuestAdditions/
-sudo ./VBoxLinuxAdditions.run 
+
+ 
