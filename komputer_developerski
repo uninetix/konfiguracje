@@ -1,3 +1,114 @@
+
+1. instlacja wg opisu Uwaga!!! Pamiętaj aby zacząć od tego https://www.vleeuwen.net/2016/07/install-safenet-etoken-pro-on-ubuntu-16-04-lts
+-----------------------------------------------------
+
+
+Since I run Ubuntu on my workstation at work I need a working eToken, so every time I upgrade (follow LTS releases) I have to make sure the eToken works. Because some have reported the installation steps I have described for 14.04 are not working for 16.04 I have decided to update the steps for the latest LTS.
+
+Download the new client software at:
+http://www.proteq.com.br/download/sac/sac9.1_linux.zip
+
+Unpack the source:
+$ unzip sac9.1_linux.zip
+
+Prepare the install:
+$ mkdir temp ; sudo mount -o loop SAC_9_1_Linux.iso ./temp
+
+Install:
+$ dpkg -i temp/Installation/Standard/DEB/SafenetAuthenticationClient-9.1.7-0_amd64.deb
+
+Done.
+
+*****************************************************
+
+2.instalacja sudo apt-get install gnutls-bin
+-----------------------------------------------------
+3.instalacja sudo apt-get install openconnect
+-----------------------------------------------------
+4. Utwórz plik 
+/etc/gnutls/pkcs11.conf
+Takiego pliku nie ma
+Wklej to do pliku 
+load=/usr/lib/libeTPkcs11.so
+UWAGA!!! Ta musi być na dysku ta biblioteka
+-----------------------------------------------------
+
+5. sudo p11tool --list-tokens 
+to coś powinno pokazać
+
+Token 0:
+	URL: pkcs11:model=p11-kit-trust;manufacturer=PKCS%2311%20Kit;serial=1;token=System%20Trust
+	Label: System Trust
+	Type: Trust module
+	Manufacturer: PKCS#11 Kit
+	Model: p11-kit-trust
+	Serial: 1
+	Module: p11-kit-trust.so
+
+
+Token 1:
+	URL: pkcs11:model=eToken;manufacturer=SafeNet%2c%20Inc.;serial=005f2f8e;token=eToken
+	Label: eToken
+	Type: Hardware token
+	Manufacturer: SafeNet, Inc.
+	Model: eToken
+	Serial: 005f2f8e
+	Module: (null)
+
+--------------------------------------------------------------------------------------
+
+6. zwróć uwagę na URL w pozycji 1
+
+teraz musisz pobrać url certyfikatu wpisz:
+sudo p11tool --list-all-certs --login 'pkcs11:model=eToken;manufacturer=SafeNet%2c%20Inc.;serial=005f2f8e;token=eToken'
+
+u mnie:
+sudo p11tool --list-all-certs --login 'pkcs11:model=eToken;manufacturer=SafeNet%2c%20Inc.;serial=024d5ef9;token=eToken'
+
+
+gdzie wartość w '' to url tokena z polecenia powyżej
+poprosi cię o PIN  :)
+
+ja na swoim tokenie widzę to
+
+Object 0:
+	URL: pkcs11:model=eToken;manufacturer=SafeNet%2c%20Inc.;serial=005f2f8e;token=eToken;id=%31%33%34%36%32%33%37%37%34%32;object=1346237742;type=cert
+	Type: X.509 Certificate
+	Label: 1346237742
+	ID: 31:33:34:36:32:33:37:37:34:32
+
+Object 1:
+	URL: pkcs11:model=eToken;manufacturer=SafeNet%2c%20Inc.;serial=005f2f8e;token=eToken;id=%31%33%34%36%32%33%37%37%34%32;object=1346237742;type=cert
+	Type: X.509 Certificate
+	Label: 1346237742
+	ID: 31:33:34:36:32:33:37:37:34:32
+
+Object 2:
+	URL: pkcs11:model=eToken;manufacturer=SafeNet%2c%20Inc.;serial=005f2f8e;token=eToken;id=%31%33%34%36%32%36%33%32%31%39;object=1346263219;type=cert
+	Type: X.509 Certificate
+	Label: 1346263219
+	ID: 31:33:34:36:32:36:33:32:31:39
+
+
+no i w '' rafał wpsiuje cały url z certyfikatu w moim przypadku z object 2
+czuli końcowe polecenie to:
+sudo openconnect -c 'pkcs11:model=eToken;manufacturer=SafeNet%2c%20Inc.;serial=005f2f8e;token=eToken;id=%31%33%34%36%32%36%33%32%31%39;object=1346263219;type=cert' -k 'pkcs11:model=eToken;manufacturer=SafeNet%2c%20Inc.;serial=005f2f8e;token=eToken;id=%31%33%34%36%32%36%33%32%31%39;object=1346263219;type=cert' vpn.orange.pl
+
+-----------------------------------------------------------------------------
+
+sudo p11tool --list-all-certs --login 'pkcs11:model=eToken;manufacturer=SafeNet%2c%20Inc.;serial=005f2f8e;token=eToken'
+
+sudo openconnect -c 'pkcs11:model=eToken;manufacturer=SafeNet%2c%20Inc.;serial=005f2f8e;token=eToken;id=%31%33%34%36%32%36%33%32%31%39;object=1346263219;type=cert' -k 'pkcs11:model=eToken;manufacturer=SafeNet%2c%20Inc.;serial=005f2f8e;token=eToken;id=%31%33%34%36%32%36%33%32%31%39;object=1346263219;type=cert' vpn.orange.pl
+
+U mnie:
+
+sudo p11tool --list-all-certs --login 'pkcs11:model=eToken;manufacturer=SafeNet%2c%20Inc.;serial=024d5ef9;token=eToken'
+
+sudo openconnect -c 'pkcs11:model=eToken;manufacturer=SafeNet%2c%20Inc.;serial=024d5ef9;token=eToken;id=%31%34%38%36%33%39%38%32%38%34;object=1486398284;type=cert' -k 'pkcs11:model=eToken;manufacturer=SafeNet%2c%20Inc.;serial=024d5ef9;token=eToken;id=%31%34%38%36%33%39%38%32%38%34;object=1486398284;type=cert' vpn.orange.pl
+
+
+
+
 Projekt Partner 3.0 na IntelliJ
 1. Skopiować .m2 z komputera, na którym projekt się kompiluje.
 2. Usunąć ewentulane settings.xml i repository.xml
@@ -11,3 +122,5 @@ Projekt Partner 3.0 na IntelliJ
 #jdbc.url=jdbc:oracle:thin:@//localhost:1525/PAPDEVTOSS
 jdbc.url=jdbc:oracle:thin:@//126.201.129.152:1521/PAPDEVTOSS
 10. Porjekt powinien się kompilować.
+
+
