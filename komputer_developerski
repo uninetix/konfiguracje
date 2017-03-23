@@ -1,0 +1,13 @@
+Projekt Partner 3.0 na IntelliJ
+1. Skopiować .m2 z komputera, na którym projekt się kompiluje.
+2. Usunąć ewentulane settings.xml i repository.xml
+3. Clone ssh://126.185.100.27:22/opt/git/partner.git
+4. Po otwarciu projektu View -> Tool windows -> Maven project
+5. W oknie Maven project wybrać ikonę Reimport All maven projects (pierwsza z lewej).
+6. Z poziomu konsoli zmienić gałąź na origin/dev (git checkout -b origin/dev)
+7. W IntelliJ Pull z gałęzi origin/dev
+8. Uwaga na .gitignore (jest załączony)
+9. Zmiana ustawień w jdbc.properties
+#jdbc.url=jdbc:oracle:thin:@//localhost:1525/PAPDEVTOSS
+jdbc.url=jdbc:oracle:thin:@//126.201.129.152:1521/PAPDEVTOSS
+10. Porjekt powinien się kompilować.
