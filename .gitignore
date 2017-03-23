@@ -1,0 +1,17 @@
+/aggregator/bundles/
+/channel/mobilkon-channel/mobilkon-channel-api/target/
+/commons/target/
+/core/core-logic/core-logic-api/target/
+/core/core-db/core-db-impl/target/
+/core/core-db/core-db-api/target/
+/core/core-logic/core-logic-impl/target/
+/adapter/ksp-client-adapter/ksp-client-adapter-api/target/
+/channel/mobilkon-channel/mobilkon-channel-impl/target/
+/spring-mvc-smx/target/
+/adapter/ksp-client-adapter/ksp-client-adapter-impl/target/
+/adapter/ocl-adapter/ocl-adapter-api/target/
+/adapter/ocl-adapter/ocl-adapter-impl/target/
+/appconfig/
+/aggregator/
+*.iml
+/.idea
