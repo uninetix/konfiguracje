@@ -1,0 +1,7 @@
+git status
+git add [sciezka do pliku]
+git commit -m "Komentarz do commitu"
+git push origin dev [nazwa gałęzi]
+git pull origin dev [nazwa gałęzi]
+
+git ststus - zielone zostaną skomitowane
