@@ -4,4 +4,9 @@ git commit -m "Komentarz do commitu"
 git push origin dev [nazwa gałęzi]
 git pull origin dev [nazwa gałęzi]
 
+Jak chcemy pominąć weryfikację ssl:
+git -c http.sslVerify=false push origin dev [nazwa gałęzi]
+git -c http.sslVerify=false pull origin dev [nazwa gałęzi]
+
+
 git ststus - zielone zostaną skomitowane
